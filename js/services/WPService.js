@@ -2,15 +2,16 @@ function WPService($http) {
 
 	var WPService = {
 		categories: [],
+		tags: [],
 		posts: [],
-		pageTitle: 'Latest Posts:',
+		pageTitle: 'Últimos Trabajos:',
 		currentPage: 1,
 		totalPages: 1,
 		currentUser: {}
 	};
 
 	function _updateTitle(documentTitle, pageTitle) {
-		document.querySelector('title').innerHTML = documentTitle + ' | AngularJS Demo Theme';
+		document.querySelector('title').innerHTML = documentTitle + ' | Biblioteca Sahara';
 		WPService.pageTitle = pageTitle;
 	}
 
@@ -31,7 +32,7 @@ function WPService($http) {
 	};
 
 	WPService.getPosts = function(page) {
-		return $http.get('wp-json/wp/v2/posts/?page=' + page + '&filter[posts_per_page]=1').success(function(res, status, headers){
+		return $http.get('wp-json/wp/v2/posts/?page=' + page + '&filter[posts_per_page]=10').success(function(res, status, headers){
 			page = parseInt(page);
 
 			if ( isNaN(page) || page > headers('X-WP-TotalPages') ) {
@@ -40,7 +41,7 @@ function WPService($http) {
 				if (page>1) {
 					_updateTitle('Posts on Page ' + page, 'Posts on Page ' + page + ':');
 				} else {
-					_updateTitle('Home', 'Latest Posts:');
+					_updateTitle('Home', 'Últimos Trabajos');
 				}
 
 				_setArchivePage(res,page,headers);
@@ -61,6 +62,20 @@ function WPService($http) {
 		_updateTitle('Category: ' + category.name, 'Posts in ' + category.name + ' Page ' + page + ':');
 
 		var request = 'wp-json/wp/v2/posts/?filter[category_name]=' + category.name + '&filter[posts_per_page]=1';
+		if ( page ) {
+			request += '&page=' + page;
+		}
+
+		return $http.get(request).success(function(res, status, headers){
+			_setArchivePage(res, page, headers);
+		});
+	};
+
+	WPService.getPostsInTag = function(tag, page) {
+		page = ( ! page ) ? 1 : parseInt( page );
+		_updateTitle('Tag: ' + tag.name, 'Posts in ' + tag.name + ' Page ' + page + ':');
+
+		var request = 'wp-json/wp/v2/posts/?filter[tag]=' + tag.name + '&filter[posts_per_page]=1';
 		if ( page ) {
 			request += '&page=' + page;
 		}

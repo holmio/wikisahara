@@ -3,8 +3,8 @@ app.controller('categoryController', ['$scope', '$routeParams', '$http', 'WPServ
 	WPService.getAllCategories();
 	$http.get('wp-json/wp/v2/categories/?search=' + $routeParams.slug).success(function(res) {
 		if (!res) {
-			document.querySelector('title').innerHTML = 'Category not found | AngularJS Demo Theme';
-			$scope.data.pageTitle = 'Category not found';
+			document.querySelector('title').innerHTML = 'Categoria no encontrada | Biblioteca Sahara';
+			$scope.data.pageTitle = 'Categoria no encontrada';
 		} else {
 			$scope.current_category_id = res[0].id;
 			WPService.getPostsInCategory(res[0], $routeParams.page);

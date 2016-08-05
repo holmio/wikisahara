@@ -9,13 +9,17 @@ app.config(['$routeProvider', '$locationProvider', '$httpProvider', function($ro
 			templateUrl: myLocalized.views + 'main.html',
 			controller: 'mainController'
 		})
-		.when('/blog/:ID', {
+		.when('/blog/:id/:slug', {
 			templateUrl: myLocalized.views + 'content.html',
 			controller: 'contentController'
 		})
 		.when('/category/:slug/', {
 			templateUrl: myLocalized.views + 'main.html',
 			controller: 'categoryController'
+		})
+		.when('/tag/:slug/', {
+			templateUrl: myLocalized.views + 'main.html',
+			controller: 'tagController'
 		})
 		.when('/category/:slug/page/:page', {
 			templateUrl: myLocalized.views + 'main.html',
@@ -41,8 +45,18 @@ app.config(['$routeProvider', '$locationProvider', '$httpProvider', function($ro
 			}
 		};
 	}]);
-}]);
 
+}]);
+app.run(['$rootScope','$location', function($rootScope, $location){
+
+  $rootScope.$on('$routeChangeSuccess', function(event, current, previous){
+  	$rootScope.homepage = false;
+  	if ($location.url() === '/'){
+		$rootScope.homepage = true;
+  	}
+    
+  });
+}]);
 
 
 

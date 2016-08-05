@@ -113,7 +113,10 @@ function my_scripts() {
 		'angular-material-css',
 		get_stylesheet_directory_uri() . '/bower_components/angular-material/angular-material.min.css'
 	);
-
+	wp_enqueue_style(
+		'font-awesome-css',
+		get_stylesheet_directory_uri() . '/bower_components/font-awesome/css/font-awesome.min.css'
+	);
 	wp_localize_script(
 		'my-scripts',
 		'myLocalized',

@@ -2,7 +2,7 @@
 app.directive('searchForm', function() {
 	return {
 		restrict: 'EA',
-		template: 'Search Keyword: <input type="text" name="s" ng-model="filter.s" ng-change="search()">',
+		template: '<span class="icon"><i class="fa fa-search"></i></span><input type="text" name="s" placeholder="Buscar..." ng-model="filter.s" ng-change="search()" ng-focus="focused()" ng-blur="blurred()">',
 		controller: ['$scope', 'WPService', function($scope, WPService) {
 			$scope.filter = {
 				s: ''
@@ -10,6 +10,13 @@ app.directive('searchForm', function() {
 			$scope.search = function() {
 				WPService.getSearchResults($scope.filter.s);
 			};
+			
+			$scope.focused = function() {
+			   $scope.noShow = "ocultar";
+			}
+			$scope.blurred = function() {
+			   $scope.noShow = "";
+			}
 		}]
 	};
 });
@@ -45,22 +52,21 @@ app.directive('sayHello', function(){
 	};
 });
 
-app.directive('menu-responsive',  function(){
+app.directive('menuResponsive',  function(){
 	return {
 		restrict: 'EA',
-		controller: function() {
-			var btn_movil = $('#nav-mobile'),
-			    menu = $('#menu').find('ul');
-			 
-			    // Al dar click agregar/quitar clases que permiten el despliegue del menú
-			    btn_movil.on('click', function (e) {
-			        e.preventDefault();
-			 
-			        var el = $(this);
-			 
-			        el.toggleClass('nav-active');
-			        menu.toggleClass('open-menu');
-			    });
-		}
+		templateUrl: myLocalized.views + 'menu.html',
+		controller: ['$scope', '$element', function($scope, $element){
+			$scope.miMenu = function(){
+				var x = document.getElementById("myTopnav");
+			    if (x.className === "topnav") {
+			        x.className += " responsive";
+			        $scope.class = "close-icon";
+			    } else {
+			        x.className = "topnav";
+			        $scope.class = "";
+			    }
+			}
+		}]
 	};
 });
