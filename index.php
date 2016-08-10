@@ -22,10 +22,11 @@
 		</div>
 
 		<div class="container"><div ng-view></div></div>
-		<footer>
-			<?php wp_footer(); ?>
-			&copy; <?php echo date( 'Y' ); ?>
-		</footer>
+		<div class="footer">
+			<footer>
+				<?php wp_footer(); ?>
+			</footer>
+		</div>
 	</div>
 
 	

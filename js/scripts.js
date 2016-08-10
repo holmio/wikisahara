@@ -25,8 +25,8 @@ app.config(['$routeProvider', '$locationProvider', '$httpProvider', function($ro
 			templateUrl: myLocalized.views + 'main.html',
 			controller: 'categoryController'
 		})
-		.when('/page/:page', {
-			templateUrl: myLocalized.views + 'main.html',
+		.when('/page/:id', {
+			templateUrl: myLocalized.views + 'page.html',
 			controller: 'pageController'
 		})
 		.otherwise({
@@ -54,8 +54,8 @@ app.run(['$rootScope','$location', function($rootScope, $location){
   	if ($location.url() === '/'){
 		$rootScope.homepage = true;
   	}
-    
   });
+
 }]);
 
 

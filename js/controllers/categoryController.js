@@ -1,7 +1,7 @@
 //Category controller
 app.controller('categoryController', ['$scope', '$routeParams', '$http', 'WPService', function($scope, $routeParams, $http, WPService) {
 	WPService.getAllCategories();
-	$http.get('wp-json/wp/v2/categories/?search=' + $routeParams.slug).success(function(res) {
+	WPService.searchElement('wp-json/wp/v2/categories/?search=' + $routeParams.slug).success(function(res) {
 		if (!res) {
 			document.querySelector('title').innerHTML = 'Categoria no encontrada | Biblioteca Sahara';
 			$scope.data.pageTitle = 'Categoria no encontrada';

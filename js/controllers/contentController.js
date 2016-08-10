@@ -1,7 +1,12 @@
 //Content controller
-app.controller('contentController', ['$scope', '$routeParams', '$http', function($scope, $routeParams, $http) {
+app.controller('contentController', ['$scope', '$routeParams', '$http', 'WPService', function($scope, $routeParams, $http, WPService) {
+	WPService.getAllCategories();
+	WPService.getAllTags();
+	$scope.data = WPService;
+	//console.log($scope.tags);
 	$http.get('wp-json/wp/v2/posts/' + $routeParams.id).success(function(res) {
 		$scope.post = res;
+		//console.log($scope.post);
 		document.querySelector('title').innerHTML = res.title.rendered + ' | Biblioteca Sahara';
 	}).error(function(res, status) {
 		if (status === 404) {

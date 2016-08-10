@@ -4,6 +4,7 @@ function WPService($http) {
 		categories: [],
 		tags: [],
 		posts: [],
+		page: [],
 		pageTitle: 'Últimos Trabajos:',
 		currentPage: 1,
 		totalPages: 1,
@@ -21,6 +22,20 @@ function WPService($http) {
 		WPService.totalPages = headers('X-WP-TotalPages');
 	}
 
+	WPService.searchElement = function(url){
+		return $http.get(url).success(function(res){
+			//console.log(res);
+		});
+	}
+	WPService.getAllTags = function() {
+		if (WPService.categories.length) {
+			return;
+		}
+
+		return $http.get('wp-json/wp/v2/tags').success(function(res){
+			WPService.tags = res;
+		});
+	};
 	WPService.getAllCategories = function() {
 		if (WPService.categories.length) {
 			return;
@@ -31,15 +46,21 @@ function WPService($http) {
 		});
 	};
 
+	WPService.getPages = function(page) {
+		return $http.get('wp-json/wp/v2/pages/'+page).success(function(res, status, headers){
+			WPService.page  = res;
+		});
+	}
+
 	WPService.getPosts = function(page) {
 		return $http.get('wp-json/wp/v2/posts/?page=' + page + '&filter[posts_per_page]=10').success(function(res, status, headers){
 			page = parseInt(page);
 
 			if ( isNaN(page) || page > headers('X-WP-TotalPages') ) {
-				_updateTitle('Page Not Found', 'Page Not Found');
+				_updateTitle('Página no encontrada', 'Página no encontrada');
 			} else {
 				if (page>1) {
-					_updateTitle('Posts on Page ' + page, 'Posts on Page ' + page + ':');
+					_updateTitle('Trabajos en Página' + page, 'Trabajos en Página' + page + ':');
 				} else {
 					_updateTitle('Home', 'Últimos Trabajos');
 				}
@@ -51,7 +72,7 @@ function WPService($http) {
 
 	WPService.getSearchResults = function(s) {
 		return $http.get('wp-json/wp/v2/posts/?filter[s]=' + s + '&filter[posts_per_page]=-1').success(function(res, status, headers){
-			_updateTitle('Search Results for ' + s, 'Search Results:');
+			_updateTitle('Resultado buscado por ' + s, 'Resultado de Busqueda:');
 
 			_setArchivePage(res,1,headers);
 		});
@@ -59,9 +80,9 @@ function WPService($http) {
 
 	WPService.getPostsInCategory = function(category, page) {
 		page = ( ! page ) ? 1 : parseInt( page );
-		_updateTitle('Category: ' + category.name, 'Posts in ' + category.name + ' Page ' + page + ':');
+		_updateTitle('Category: ' + category.name, 'Trabajos en ' + category.name + ' Página ' + page + ':');
 
-		var request = 'wp-json/wp/v2/posts/?filter[category_name]=' + category.name + '&filter[posts_per_page]=1';
+		var request = 'wp-json/wp/v2/posts/?filter[category_name]=' + category.name + '&filter[posts_per_page]=10';
 		if ( page ) {
 			request += '&page=' + page;
 		}
@@ -73,14 +94,15 @@ function WPService($http) {
 
 	WPService.getPostsInTag = function(tag, page) {
 		page = ( ! page ) ? 1 : parseInt( page );
-		_updateTitle('Tag: ' + tag.name, 'Posts in ' + tag.name + ' Page ' + page + ':');
+		_updateTitle('Tag: ' + tag.name, 'Trabajos en' + tag.name + ' Página ' + page + ':');
 
-		var request = 'wp-json/wp/v2/posts/?filter[tag]=' + tag.name + '&filter[posts_per_page]=1';
+		var request = 'wp-json/wp/v2/posts/?filter[tag]=' + tag.name + '&filter[posts_per_page]=10';
 		if ( page ) {
 			request += '&page=' + page;
 		}
 
 		return $http.get(request).success(function(res, status, headers){
+			//console.log(res);
 			_setArchivePage(res, page, headers);
 		});
 	};

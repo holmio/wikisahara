@@ -1,32 +1,24 @@
 <div ng-if="!is404" class="container-post">
-	
+	<aside class="item">
+		<h4>Categorías</h4>
+  		<div class="categorias-post">
+			<ul>
+				<li ng-repeat="category in data.categories | orderBy:'-count'">
+					<span ng-if="current_category_id && category.id == current_category_id" ng-bind-html="category.name"></span>
+					<a ng-if="!current_category_id || category.id != current_category_id" href="category/{{category.slug}}" ng-bind-html="category.name"></a> <span class="contador" ng-bind-html="category.count"></span>
+				</li>
+			</ul>
+		</div>
+	</aside>
 	<div class="item cuerpo-post">
-	<h1 ng-bind-html="post.title.rendered"></h1>
-	<div class="datos">
-		<address class="author">Autor <a rel="author" href="/author/john-doe">John Doe</a></address>
-		<time pubdate datetime="2011-08-28" title="August 28th, 2011">8/28/11</time>
-	</div>
-	
-	<div class="tags">
-		<i class="fa fa-tags" aria-hidden="true"></i>
-		<ul>
-			<li>Sahara</li>
-			<li>Pepe</li>
-			<li>Prueba</li>
-		</ul>
-	</div>
-    
-		<!-- <slick dots="true" autoplay="true" slides-to-show="1" slides-to-scroll="1" init-onload="true" data="media" style="width:300px">
-			<div ng-if="image.is_image" ng-repeat="image in media">
-				<img alt="{{image.title.rendered}}" ng-src="{{image.media_details.sizes.medium.source_url}}" />
-			</div>
-		</slick> -->
+		<h1 ng-bind-html="post.title.rendered"></h1>
+		<div class="datos">
+			<address class="author">Autor <a rel="author" href="/author/john-doe">John Doe</a></address>
+			<time datetime="{{post.date}}" title="{{post.date | date : format : timezone}}" ng-bind-html="post.date | date : format : timezone"></time>
+			<div ng-repeat="tag in data.tags" class="tags"><a ng-repeat="lista in post.tags" ng-if="lista == tag.id" ng-href="{{tag.link}}">{{tag.name}}</a></div>
+		</div>
 		<div ng-bind-html="post.content.rendered"></div>
 	</div>
-	<aside class="item">
-		<h4>Epcot Center</h4>
-  		<p>The Epcot Center is a theme park in Disney World, Florida.</p>
-	</aside>
 </div>
 <div ng-if="is404">
 	<h1>Página no encontrada</h1>

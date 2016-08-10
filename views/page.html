@@ -1,0 +1,10 @@
+<div ng-if="!is404" class="container-post">
+	<div class="cuerpo-post">
+		<h1 ng-bind-html="data.page.title.rendered"></h1>
+		<div ng-bind-html="data.page.content.rendered"></div>
+	</div>
+</div>
+<div ng-if="is404">
+	<h1>Página no encontrada</h1>
+	<p>{{errorMessage}}</p>
+</div>

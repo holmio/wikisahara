@@ -80,6 +80,10 @@ function my_scripts() {
 		get_stylesheet_directory_uri() . '/js/controllers/categoryController.js'
 	);
 	wp_enqueue_script(
+		'wp-tagController',
+		get_stylesheet_directory_uri() . '/js/controllers/tagController.js'
+	);
+	wp_enqueue_script(
 		'wp-pageController',
 		get_stylesheet_directory_uri() . '/js/controllers/pageController.js'
 	);
