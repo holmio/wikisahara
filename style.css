@@ -134,6 +134,13 @@ h1.tituloHome{
     margin-bottom: 70px;
     color: #900000;
 }
+.categorias-home {
+    background-color: rgba(166, 200, 199, 0.19);
+    padding-top: 1px;
+    padding-right: 30px;
+    padding-left: 30px;
+    text-align: center;
+}
 article h2{
     margin-bottom: 0px;
 }
@@ -320,6 +327,32 @@ address.author{
 	}
 }
 @media screen and (max-width:680px) {
+    p {
+        text-align: justify;
+        font-size: 15px;
+    }
+    h1 {
+    font-size: 1.6em;
+    }
+    h2 {
+        font-size: 1.3em;
+    }
+    h3 {
+        font-size: 1em;
+    }
+    .cabecera{
+        padding: 14px 7px;
+    }
+    .categorias-home{
+        padding-right: 4px;
+        padding-left: 4px;
+        background-color: rgba(166, 200, 199, 0.11);
+    }
+    .container{
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 60px;
+    }
     .container-post{
         -webkit-flex-direction: column;
         -ms-flex-direction: column;
@@ -362,6 +395,17 @@ address.author{
 	    padding-top: 10px;
 	    border-bottom: 1px solid;
 	}
+    .categorias-home li:not(:last-child), .categorias-post li:not(:last-child){
+        margin-right: 5px;
+    }
+    .categorias-home li, .categorias-post li {
+        background-color: rgba(192, 216, 215, 0.23);
+        padding: 1px 7px;
+    }
+    .categorias-home li a, .categorias-post li a{
+        font-size: 14px;
+    }
+
 	.item-bar:nth-child(2){
 		/*width: 30%;*/
 	}

@@ -103,6 +103,10 @@ function my_scripts() {
 		'style-css',
 		get_stylesheet_directory_uri() . '/style.css'
 	);
+	wp_enqueue_style(
+		'stylecore-css',
+		get_stylesheet_directory_uri() . '/stylecore.css'
+	);
 
 	wp_enqueue_style(
 		'slick-css',
